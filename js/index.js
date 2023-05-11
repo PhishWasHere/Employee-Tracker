@@ -1,21 +1,9 @@
 const inquirer = require('inquirer');
 // Import and require mysql2
 const mysql = require('mysql2');
-const promptQuery = require('./js/allEmp.js');
-const { allEmp, empDept } = require('./js/allEmp.js');
+const db = require('../db/connections.js');
+const query = require('./query.js');
 
-// Connect to database
-const db = mysql.createConnection(
-  {
-    host: 'localhost',
-    // MySQL username,
-    user: 'root',
-    // MySQL password
-    password: '1234',
-    database: 'employees'
-  },
-  console.log(`Connected to the employees database.`)
-);
 
 const init = () => {
   inquirer
@@ -40,7 +28,7 @@ const init = () => {
     .then((answers) => {
       if (answers.choice === 'View All Employees') {
         // Handle the "View All Employees" choice
-        allEmp()
+        query[0]()
           .then(() => {
             inquirer
               .prompt([
@@ -51,15 +39,14 @@ const init = () => {
                   choices: ['Yes']
                 },
               ])
-              .then((answers) => {
-                  // If the user selects "Yes", call the "init" function again to show the main menu
+              .then(() => {
                   init();
               });
           })
           .catch((err) => console.log(err));
       } else if (answers.choice === 'View All Employees By Department') {
         // Handle the "View All Employees By Department" choice
-        empDept()
+        query[1]()
           .then(() => {
             inquirer
               .prompt([
@@ -162,4 +149,4 @@ const init = () => {
     .catch((err) => console.log(err));
 };
 
-init();
+module.exports = init;
