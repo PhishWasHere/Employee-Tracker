@@ -22,7 +22,7 @@ CREATE TABLE managers (
     last_name VARCHAR(30) NOT NULL
 ); 
 
-CREATE TABLE employees (
+CREATE TABLE all_employees (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
