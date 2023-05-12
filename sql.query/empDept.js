@@ -3,27 +3,6 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const db = require('../db/connections.js');
 
-const allEmp = async () => {
-    try {
-        const results = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM employees.all_employees;', function (err, results) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(results);
-                }
-            });
-        });
-        console.log(results);
-        return results;
-    } catch (err) {
-        console.log(err);
-        throw new Error('Error retrieving employees');
-    }
-};
-
-
-
 const empDept = async () => {
     try {
         const answers = await inquirer.prompt([
@@ -48,11 +27,8 @@ const empDept = async () => {
         return results;
     } catch (err) {
         console.log(err);
-        throw new Error('Error retrieving employees');
+        throw new Error('Error retrieving employees/department data');
     }
 };
 
-
-const query = [allEmp, empDept];
-
-module.exports = query; 
+module.exports = empDept;
