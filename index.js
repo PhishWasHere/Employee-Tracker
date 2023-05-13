@@ -6,13 +6,8 @@ const mysql = require('mysql2');
 //SQL connections
 const db = require('./db/connections.js');
 
-//SQL queries, i have learnt that i hate sql query's with a passion. thanks for coming to my TedTalk
-const allEmp = require('./sql.query/allEmp.js');
-const empDept = require('./sql.query/empDept.js');
-const empMan = require('./sql.query/empMan.js');
-const allRoles = require('./sql.query/allRoles.js');
-const allDept = require('./sql.query/allDept.js');
-const addEmp = require('./sql.query/addEmp.js');
+//put all the queries into a single file
+const query = require('./query/query.js');  
 
 console.log('index connect');
 
@@ -55,23 +50,26 @@ const init = () => {
       switch (answers.choice){
         case 'Quit': console.log('Goodbye'); process.exit(); 
         
-        case 'View All Employees': allEmp().then(() => back());
+        case 'View All Employees': query.allEmp().then(() => back());
           break;
-        case 'View All Employees By Department': empDept().then(() => back());;
+        case 'View All Employees By Department': query.empDept().then(() => back());;
           break;
-        case 'View All Employees By Manager': empMan().then(() => back());;
+        case 'View All Employees By Manager': query.empMan().then(() => back());;
           break;
-        case 'View All Roles': allRoles().then(() => back());;
+        case 'View All Roles': query.allRoles().then(() => back());;
           break;
-        case 'View All Departments': allDept().then(() => back());;
+        case 'View All Departments': query.allDept().then(() => back());;
           break;
-        case 'Add Employee': addEmp().then(() => back());;
+        case 'Add Employee': query.addEmp().then(() => back());;
           break;
-
-
+        case 'Remove Employee': query.delEmp().then(() => back());;
+          break;
+        case 'Add Department': query.addDept().then(() => back());;
+          break;
+        case 'Add Role': query.addRole().then(() => back());;
+          break;
        }
     });
 }; 
 
-module.exports = init;
 init();

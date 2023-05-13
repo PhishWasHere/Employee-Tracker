@@ -5,16 +5,36 @@ const db = require('../db/connections.js');
 
 const empDept = async () => {
     try {
+
+        const departments = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM departments', function (err, results) {    
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+
         const answers = await inquirer.prompt([
             {
                 type: 'list',
                 name: 'department',
                 message: 'Which department would you like to view?',
-                choices: ['accountant', 'legal', 'logistics', 'IT', 'sales']
+                choices: departments.map((dept) => {
+                    return {
+                        name: dept.name,
+                        value: dept.id,
+                    };
+                }),
             }
-        ]);
+        ]); 
         const results = await new Promise((resolve, reject) => {
-            db.query('SELECT all_employees.id, all_employees.first_name, all_employees.last_name, roles.salary FROM all_employees JOIN roles ON all_employees.role_id = roles.id JOIN departments ON roles.department_id = departments.id WHERE departments.name = ?',
+            db.query(`
+            SELECT e.id, e.first_name, e.last_name
+            FROM all_employees AS e
+            JOIN roles AS r ON e.role_id = r.id
+            WHERE r.department_id = ?`,
             [answers.department], function (err, results) {
                 if (err) {
                     reject(err);
