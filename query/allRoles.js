@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 // Import and require mysql2
 const mysql = require('mysql2');
-const db = require('../db/connections.js');
+const db = require('../config/connection.js');
 
 const roles = async () => {
     try {
