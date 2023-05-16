@@ -4,10 +4,10 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 
 //SQL connections
-const db = require('./db/connections.js');
+const db = require('./config/connection.js');
 
 //put all the queries into a single file
-const query = require('./query/query.js');  
+const query = require('./query/index.js');  
 
 console.log('index connect');
 
@@ -19,7 +19,7 @@ const back = () => { //i wanted to make this a function on another file like the
       message: 'Press any key to go back',
     },
   ]).then(() => {
-    init();
+    init(); //i didnt know how to properly intergrate this bit
   });
 };
 
