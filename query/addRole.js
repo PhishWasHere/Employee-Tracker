@@ -21,7 +21,8 @@ const addRole = async () => {
                 type: 'input',
                 name: 'title',
                 message: 'What is the role\'s title? (type "quit" to cancel)',
-                // for the life of me i couldnt get this to work
+                // i wanted to have a 'quit' option to go back
+                // but for the life of me i couldnt get this to work
                 // validate: function (input) {
                 //     if (input.toLowerCase() === 'quit') {
                 //         back();
